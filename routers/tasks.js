@@ -29,7 +29,7 @@ router.post("/new", auth, (req, res) => {
 
 router.get("/all", auth, (req, res) => {
   req.user
-    .populate({ path: "tasks", options: { sort: { date: -1 } } })
+    .populate({ path: "tasks", options: { sort: { date: 1 } } })
     .execPopulate()
     .then(() => {
       res.json(req.user.tasks);

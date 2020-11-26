@@ -47,7 +47,6 @@ const Navbar = () => {
         </p>
         {show ? (
           <div className="menu">
-            <p  style={{ marginTop: 20, fontSize: 16 }} >Settings</p>
             <p style={{ marginTop: 20, fontSize: 16 }} onClick={AccountDelete}>
               Delete account
             </p>

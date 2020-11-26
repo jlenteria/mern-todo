@@ -1,0 +1,10 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const ADD_TASK = "ADD_TASK";
+export const GET_TASKS = "GET_TASKS";
+export const UPDATE_TASK = "UPDATE_TASK";
+export const DELETE_TASK = "REFRESH_TASK";
+export const LOADING = "LOADING";
+export const DISABLED = "DISABLED";
+export const ENABLED = "ENABLED";
+export const EDIT_DISABLED = "EDIT_DISABLED";

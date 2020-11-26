@@ -1,0 +1,237 @@
+body {
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./img/background.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.navbar ul {
+  display: flex;
+}
+.navbar ul li {
+  list-style-type: none;
+}
+
+.navbar ul li a {
+  color: white;
+}
+
+/* Landing Page */
+.landing {
+  position: relative;
+}
+
+.landing-inner {
+  height: 100%;
+  width: 80%;
+  margin: 250px auto auto auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.signup-container {
+  padding: 40px;
+  width: 35%;
+  margin: 0 auto;
+  background: rgba(239, 242, 241, 0.8);
+  border-radius: 30px;
+}
+.login-container {
+  padding: 35px;
+  width: 45%;
+  margin: 0 auto;
+  background: rgba(239, 242, 241, 0.8);
+  border-radius: 30px;
+}
+
+/* Forms */
+.form .form-group {
+  margin: 1.6rem 0;
+}
+
+.form .form-text {
+  display: block;
+  margin-top: 0.3rem;
+  color: #888;
+}
+
+.form button,
+.google-button {
+  width: 100%;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="date"],
+.form select,
+.form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+}
+
+.form input[type="submit"],
+button {
+  font: inherit;
+}
+
+.nav-link:hover,
+.menu p:hover,
+.back,
+.edit-delete i {
+  cursor: pointer;
+}
+
+.task {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.edit-task,
+.add-task,
+.confirmation {
+  width: 350px;
+  height: 250px;
+  background: white;
+  margin: 0;
+  position: fixed;
+  top: 40%;
+  left: 40%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 50px grey;
+}
+
+.dashboard {
+  min-height: 69vh;
+}
+
+.dashboard-sub {
+  width: 45%;
+  margin: 30px auto 0 auto;
+  text-align: center;
+}
+
+.dashboard-nav {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.dashboard-nav h3 {
+  margin-top: 10px;
+}
+
+.dashboard-nav h5 {
+  margin-top: 20px;
+  color: white;
+}
+
+.menu {
+  display: block;
+  position: absolute;
+  background: #6d98ba;
+  width: 160px;
+  color: white;
+  text-align: center;
+  border-radius: 7px;
+  margin-top: -17px;
+  margin-left: -26px;
+}
+
+footer {
+  background: #03012c;
+  bottom: 0;
+  color: rgba(255, 255, 255, 0.6);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  .dashboard-sub {
+    width: 90%;
+  }
+
+  .menu {
+    margin-left: -20px;
+    width: 120px;
+  }
+
+  .dashboard-nav {
+    width: 98%;
+  }
+
+  .dashboard-nav h3 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .dashboard-nav h5 {
+    font-size: 18px;
+    margin-top: 23px;
+  }
+
+  .add-task,
+  .edit-task,
+  .confirmation {
+    top: 55%;
+    left: 25%;
+  }
+
+  .login-container,
+  .signup-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .dashboard-sub {
+    width: 90%;
+  }
+
+  .menu {
+    margin-left: -20px;
+    width: 120px;
+  }
+
+  .dashboard-nav {
+    width: 98%;
+  }
+
+  .dashboard-nav h3 {
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
+  .dashboard-nav h5 {
+    font-size: 18px;
+    margin-top: 23px;
+  }
+
+  .add-task,
+  .edit-task,
+  .confirmation {
+    top: 55%;
+    left: 13%;
+  }
+
+  .login-container,
+  .signup-container {
+    width: 90%;
+  }
+}

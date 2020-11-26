@@ -75,12 +75,19 @@ export const setCurrentUser = (decoded) => {
 
 //Log user out
 export const logoutUser = () => (dispatch) => {
-  //remove token from localstorage
+
+  setTimeout(() => {
+    //remove token from localstorage
   localStorage.removeItem("jwtToken");
   //remove auth header for future requests
   setAuthToken(false);
   //Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  }, 1500);
+  toast.error("Logging out ...", {
+    autoClose: 1500,
+    progress: undefined,
+  })
 };
 
 export const setLoading = () => {

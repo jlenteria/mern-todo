@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from 'react-toastify'
 import {
   GET_TASKS,
   GET_ERRORS,
@@ -15,7 +16,12 @@ export const addTask = (taskData) => (dispatch) => {
 
   axios
     .post("/api/tasks/new", taskData)
-    .then((res) => dispatch(getTasks()))
+    .then((res) => {
+      setTimeout(() => {
+        dispatch(getTasks());
+      }, 100);
+      toast.success("Todo added", {autoClose: 1500});
+    })
     .catch((err) =>
       dispatch({
         type: GET_ERRORS,
@@ -38,7 +44,12 @@ export const getTasks = () => (dispatch) => {
 export const updateTask = (id, data) => (dispatch) => {
   axios
     .put(`/api/tasks/${id}`, data)
-    .then(() => dispatch(getTasks()))
+    .then(() => {
+        setTimeout(() => {
+          dispatch(getTasks());
+        }, 100);
+        toast.success("Todo updated",{autoClose: 1500});
+      })
     .catch((err) =>
       dispatch({
         type: GET_ERRORS,
@@ -51,11 +62,15 @@ export const deleteTask = (id) => (dispatch) => {
   axios
     .delete(`/api/tasks/${id}`)
     .then((res) =>
-      dispatch({
-        type: DELETE_TASK,
-        payload: id,
-      })
-    )
+      {
+        setTimeout(() => {
+          dispatch({
+            type: DELETE_TASK,
+            payload: id,
+          })
+        }, 1500);
+      toast.success("Todo deleted",{autoClose: 1500})
+    })
     .catch((err) => console.log(err));
 };
 

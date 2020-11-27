@@ -35,15 +35,14 @@ body {
 }
 .signup-container {
   padding: 40px;
-  width: 35%;
-  margin: 0 auto;
+  width: 50%;
   background: rgba(239, 242, 241, 0.8);
   border-radius: 30px;
+  margin-bottom: 100px;
 }
 .login-container {
   padding: 35px;
-  width: 45%;
-  margin: 0 auto;
+  width: 50%;
   background: rgba(239, 242, 241, 0.8);
   border-radius: 30px;
 }
@@ -156,13 +155,12 @@ button {
 
 footer {
   background: #03012c;
-  bottom: 0;
   color: rgba(255, 255, 255, 0.6);
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 50px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -203,6 +201,14 @@ footer {
 }
 
 @media only screen and (max-width: 600px) {
+  .landing-inner{
+    height: 100%;
+    width: 100%;
+    margin: 100px auto auto auto;
+  }
+  .landing-inner h1{
+    font-size: 30px;
+  }
   .dashboard-sub {
     width: 90%;
   }
@@ -225,16 +231,21 @@ footer {
     font-size: 18px;
     margin-top: 23px;
   }
-
-  .add-task,
-  .edit-task,
-  .confirmation {
-    top: 32%;
-    left: 14%;
-  }
-
   .login-container,
   .signup-container {
-    width: 90%;
+    width: 95%;
+  }
+ .log, .sign{
+    padding: 0 !important;
+  }
+
+  footer {
+    background: #03012c;
+    color: rgba(255, 255, 255, 0.6);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
   }
 }

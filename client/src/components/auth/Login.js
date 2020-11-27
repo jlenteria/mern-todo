@@ -51,8 +51,8 @@ const Login = (props) => {
           paddingBottom: "145px",
         }}
       >
-        <div className="row login-container">
-          <div className="col-md-12 m-auto">
+        <div className="row mx-auto login-container">
+          <div className="col-md-12 mx-auto log">
             <h2 className="large text-primary text-center">
               <i className="fa fa-user"></i> Sign In
             </h2>
@@ -97,13 +97,6 @@ const Login = (props) => {
                 </button>
               )}
             </form>
-            <p className="text-center">or</p>
-            <a href="/">
-              <button type="button" className="btn btn-danger google-button">
-                Login with Google
-              </button>
-            </a>
-
             <p className="my-2">
               Don't have an account?{" "}
               <Link to="/register" style={{ fontWeight: "bold" }}>

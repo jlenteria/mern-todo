@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {Modal,Button} from 'react-bootstrap';
 import { getTasks, deleteAllTask } from "../../actions/taskActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { addTask, disabled, enabled } from "../../actions/taskActions";
@@ -6,17 +7,12 @@ import Task from "../task/Task";
 import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = (props) => {
-  const [description, setDescription] = useState("");
-
   const [state, setState] = useState({
     showConfirmation: false,
-    showForm: false,
+    description: ""
   });
 
-  var opacity;
   var deleteDisabled = false;
-  var addDisabled = false;
-
   const errors = useSelector((state) => state.errors);
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -29,20 +25,15 @@ const Dashboard = (props) => {
     errors.description = "";
   });
 
-  const descriptionOnChange = (data) => {
-    setDescription(data.target.value);
+  const descriptionOnChange = (text) =>e => {
+    setState({[text]: e.target.value})
   };
 
   const showForm = (e) => {
-    e.preventDefault();
-    setState({
-      showForm: true,
-    });
     dispatch(disabled());
   };
 
-  const showConfirmation = (e) => {
-    dispatch(disabled());
+  const showConfirmationDelete= (e) => {
     setState({
       showConfirmation: true,
     });
@@ -51,17 +42,16 @@ const Dashboard = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newTask = {
-      description: description,
+      description: state.description,
       date: new Date().now,
     };
 
-    setDescription("");
+    setState({description: ""})
     dispatch(addTask(newTask));
   };
 
   const backClick = (e) => {
     setState({
-      showForm: false,
       showConfirmation: false,
     });
     dispatch(enabled());
@@ -73,17 +63,6 @@ const Dashboard = (props) => {
     });
     dispatch(deleteAllTask());
   };
-
-  if (
-    (tasks.disabled && !tasks.editDisabled) ||
-    (!tasks.disabled && tasks.editDisabled)
-  ) {
-    opacity = 0.5;
-    deleteDisabled = true;
-    addDisabled = true;
-  } else {
-    opacity = 1;
-  }
 
   //for converting array
   let task = [];
@@ -98,18 +77,16 @@ const Dashboard = (props) => {
   return (
     <div className="dashboard">
       <div className="dashboard-sub">
-        <h2 style={{ color: "#0D21A1", opacity: `${opacity}` }}>Todo List</h2>
+        <h2 style={{ color: "#0D21A1"}}>Todo List</h2>
         <hr
           style={{
             marginBottom: 10,
             background: "white",
-            opacity: `${opacity}`,
           }}
         ></hr>
 
         <div className="dash-buttons" style={{ marginBottom: 30 }}>
           <button
-            disabled={addDisabled}
             className="btn btn-primary mr-2"
             onClick={showForm}
           >
@@ -118,7 +95,7 @@ const Dashboard = (props) => {
           <button
             disabled={deleteDisabled}
             className="btn btn-danger"
-            onClick={showConfirmation}
+            onClick={showConfirmationDelete}
           >
             Delete All Task
           </button>
@@ -126,77 +103,58 @@ const Dashboard = (props) => {
         <Task />
       </div>
       {tasks.disabled ? (
-        <div className="add-task">
-          <button
-            style={{
-              fontSize: "50px",
-              marginTop: -22,
-              marginBottom: 25,
-              outline: "none",
-            }}
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={backClick}
-          >
-            <span aria-hidden="true" style={{ color: "red" }}>
-              &times;
-            </span>
-          </button>
-          <h5 className="text-center text-success ml-4">Add task</h5>
-          <hr style={{ background: "rgba(0,0,0,0.12)" }} />
+        <Modal show={true} onHide = {backClick} keyboard = {false} animation={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Task</Modal.Title>
+          </Modal.Header>
           <form className="form" onSubmit={onSubmit}>
-            <div className="form-group">
-              <TextFieldGroup
-                placeholder="Input your task ..."
-                name="description"
-                style={{ fontFamily: "monospace" }}
-                value={description}
-                onChange={descriptionOnChange}
-                autoComplete="off"
-                error={errors.description}
-              />
-              <button className="btn btn-primary" style={{ width: "100%" }}>
-                Add
-              </button>
+
+          <Modal.Body>
+              <div className="form-group">
+                <TextFieldGroup
+                  placeholder="Input your task ..."
+                  name="description"
+                  style={{ fontFamily: "monospace" }}
+                  value={state.description}
+                  onChange={descriptionOnChange("description")}
+                  autoComplete="off"
+                  error={errors.description}
+                />
+              </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <div className="d-flex">
+              <Button variant="secondary" onClick={backClick}>
+              Cancel
+            </Button>
+              <Button variant="primary" type="submit" className="ml-2">
+                Post
+              </Button>
             </div>
+          </Modal.Footer>
           </form>
-        </div>
+        </Modal>
       ) : null}
 
       {state.showConfirmation ? (
-        <div className="confirmation">
-          <button
-            style={{ fontSize: "50px", marginTop: -25, outline: "none" }}
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={backClick}
-          >
-            <span aria-hidden="true" style={{ color: "red" }}>
-              &times;
-            </span>
-          </button>
-          <h5 style={{ marginTop: 40 }}>
-            Are you sure you want to delete all ?
-          </h5>
-          <div style={{ dispaly: "inline", marginTop: 20 }}>
-            <button
-              style={{ width: "48%" }}
-              className="btn btn-success"
-              onClick={deleteAll}
-            >
+        <Modal show={true} onHide = {backClick} keyboard = {false} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <h5>Are you sure you want to delete your tasks?</h5>
+        </Modal.Body>
+        <Modal.Footer>
+          <div className="d-flex">
+            <Button variant="secondary" onClick={backClick}>
+            Cancel
+          </Button>
+            <Button variant="primary" type="button" onClick={deleteAll} className="ml-2">
               Yes
-            </button>
-            <button
-              style={{ width: "48%", marginLeft: 4 }}
-              className="btn btn-danger"
-              onClick={backClick}
-            >
-              Cancel
-            </button>
+            </Button>
           </div>
-        </div>
+        </Modal.Footer>
+      </Modal>
       ) : null}
     </div>
   );

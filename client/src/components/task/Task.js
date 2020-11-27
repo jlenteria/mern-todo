@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
+import {Modal, Button} from 'react-bootstrap'
 import {
   updateTask,
   deleteTask,
   getTasks,
-  enabled,
-  editDisabled,
 } from "../../actions/taskActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,20 +12,22 @@ import Spinner from "../common/Spinner";
 
 const Task = (props) => {
   //variables
-  const [error, setError] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState("");
   const [state, setState] = useState({
     completed: false,
     _id: "",
+    _idDelete: "",
     description: "",
     oldDescription: "",
     oldCompleted: false,
+    showEditForm: false,
+    showDeleteConfirmation: false,
+    error: ""
   });
 
-  var opacity;
-  var pointerEvents = "all";
-
+  
   const tasks = useSelector((state) => state.tasks);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,55 +61,42 @@ const Task = (props) => {
       oldCompleted: com,
       completed: com,
       _id: id,
+      showEditForm: true
     });
-    dispatch(editDisabled());
   };
 
   const backClick = (e) => {
-    dispatch(enabled());
+    setState({
+      showEditForm: false,
+      showDeleteConfirmation: false,
+      error: ""
+    })
   };
 
   const onSubmit = (id) => {
-    if (
-      state.description === state.oldDescription &&
-      state.completed === state.oldCompleted
-    ) {
-      dispatch(enabled());
-    } else {
+
       if (buttonDisabled) {
-        setError("Field is required");
+        setState({...state,error: "Field is required"})
       } else {
         const newTask = {
           description: state.description,
           completed: state.completed,
           date: new Date(),
         };
-        setError("");
+        setState({...state,error: "", showEditForm: false})
         dispatch(updateTask(id, newTask));
       }
-    }
   };
 
   const onDelete = (id) => {
-    dispatch(deleteTask(id));
+    setState({...state,showDeleteConfirmation: true,_idDelete: id})
   };
 
-  if (
-    (tasks.editDisabled && !tasks.disabled) ||
-    (!tasks.editDisabled && tasks.disabled)
-  ) {
-    pointerEvents = "none";
+  const confirmClick = () => {
+    setState({...state,showDeleteConfirmation: false})
+    dispatch(deleteTask(state._idDelete));
   }
 
-  //setting opacity
-  if (
-    (tasks.editDisabled && !tasks.disabled) ||
-    (!tasks.editDisabled && tasks.disabled)
-  ) {
-    opacity = 0.5;
-  } else {
-    opacity = 1;
-  }
   //for converting array
   let task = [];
   for (const [key, value] of Object.entries(tasks.tasks)) {
@@ -122,7 +110,7 @@ const Task = (props) => {
       ) : (
         <div>
           {task.length ? (
-            <div className="task" style={{ opacity: `${opacity}` }}>
+            <div className="task">
               {task.map((tsk, index) => (
                 <div key={index} style={{ padding: "0 10px" }}>
                   <div
@@ -168,7 +156,6 @@ const Task = (props) => {
                           background: "transparent",
                           outline: "none",
                           border: 0,
-                          pointerEvents: `${pointerEvents}`
                         }}
                       >
                         <i
@@ -184,7 +171,6 @@ const Task = (props) => {
                           background: "transparent",
                           outline: "none",
                           border: 0,
-                          pointerEvents: `${pointerEvents}`
                         }}
                       >
                         <i
@@ -225,27 +211,12 @@ const Task = (props) => {
           )}
 
           {/* Edit div */}
-          {tasks.editDisabled ? (
-            <div className="edit-task">
-              <button
-                style={{
-                  fontSize: "50px",
-                  marginTop: -22,
-                  marginBottom: 20,
-                  outline: "none",
-                }}
-                type="button"
-                className="close"
-                aria-label="Close"
-                onClick={backClick}
-              >
-                <span aria-hidden="true" style={{ color: "red" }}>
-                  &times;
-                </span>
-              </button>
-              <h5 className="text-center text-success ml-4">Edit task</h5>
-              <hr style={{ background: "rgba(0,0,0,0.12)" }} />
-
+          {state.showEditForm ? (
+            <Modal show={true} onHide={backClick} keyboard={false} animation={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Task</Modal.Title>
+              </Modal.Header>
+              
               <form
                 className="form"
                 onSubmit={(e) => {
@@ -253,7 +224,8 @@ const Task = (props) => {
                   onSubmit(state._id, tasks);
                 }}
               >
-                <div className="form-group" style={{ textAlign: "left" }}>
+              <Modal.Body>
+              <div className="form-group" style={{ textAlign: "left" }}>
                   <TextFieldGroup
                     placeholder={state.description}
                     name="description"
@@ -261,9 +233,9 @@ const Task = (props) => {
                     value={state.description}
                     onChange={onChangeField}
                     autoComplete="off"
-                    error={error}
+                    error={state.error}
                   />
-                  <div style={{ float: "left", marginTop: -10 }}>
+                  <div style={{ float: "left", marginTop: -10}}>
                     <input
                       defaultChecked={state.completed}
                       type="checkbox"
@@ -272,21 +244,38 @@ const Task = (props) => {
                       value={state.completed}
                       onChange={onChangeInput}
                     />
-                    <span> Completed</span>
+                    <span > Completed</span>
                   </div>
-
-                  <button
-                    type="submit"
-                    disabled={state.disabled}
-                    className="btn btn-primary"
-                    style={{ width: "100%", marginTop: 10 }}
-                  >
-                    Update
-                  </button>
                 </div>
+              </Modal.Body>
+                  <Modal.Footer style={{marginTop: 20}}>
+                  <div className="d-flex">
+                    <Button variant="secondary" onClick={backClick}>
+                    Cancel
+                  </Button>
+                    <Button variant="primary" type="submit" className="ml-2">
+                      Update
+                    </Button>
+                  </div>
+              </Modal.Footer>
               </form>
-            </div>
+            </Modal>
           ) : null}
+          {state.showDeleteConfirmation ? (<Modal show={true} onHide={backClick} keyboard={false} animation={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmation</Modal.Title>
+              </Modal.Header>
+              
+              <Modal.Body className="text-center">
+                <h5 style={{width: '85%', margin: '0 auto'}}>Are you sure you want to delete this task ?</h5>
+              </Modal.Body>
+              <Modal.Footer>
+              <div className="d-flex float-center">
+                  <Button variant="secondary" type="button" onClick={backClick}>Cancel</Button>
+                  <Button variant="primary" type="button" className="ml-2" onClick={confirmClick}>Yes</Button>
+                </div>
+              </Modal.Footer>
+          </Modal>) : null}
         </div>
       )}
     </div>

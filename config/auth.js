@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const keys = require("./keys");
-
 const passport = require("passport");
-//const GoogleStrategy = require("passport-google-oauth20").Strategy;
+
+// const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -24,7 +24,6 @@ passport.deserializeUser((id, done) => {
 //       proxy: true,
 //     },
 //     (accessToken, refreshToken, profile, done) => {
-//       console.log(profile);
 //       User.findOne({ googleId: profile.id }).then((existingUser) => {
 //         if (existingUser) {
 //           done(null, existingUser);

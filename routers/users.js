@@ -3,6 +3,7 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const auth = require("../config/auth");
+
 //Load user model
 const User = require("../models/user");
 
@@ -116,4 +117,5 @@ router.get("/all", (req, res) => {
 router.get("/current", auth, (req, res) => {
   res.json(req.user);
 });
+
 module.exports = router;

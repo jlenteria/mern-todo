@@ -51,11 +51,11 @@ const Register = (props) => {
   return (
     <div>
       <section
-        className="container signup-container"
+        className="container"
         style={{ marginTop: "50px"}}
       >
-        <div className="row">
-          <div className="col-md-12 m-auto">
+        <div className="row mx-auto signup-container">
+          <div className="col-md-12 mx-auto sign">
             <h2 className="large text-primary text-center">
               <i className="fa fa-user"></i>
               {""} Sign Up

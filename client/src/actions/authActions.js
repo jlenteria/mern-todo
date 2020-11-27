@@ -56,11 +56,16 @@ export const loginUser = (userData) => (dispatch) => {
 
 //Delete Account
 export const deleteAccount = () => (dispatch) => {
-  axios.delete("/api/users/delete").then((res) =>
-    dispatch({
-      type: SET_CURRENT_USER,
-      payload: {},
-    })
+  axios.delete("/api/users/delete").then(() =>{
+    setTimeout(() => {
+      dispatch({
+        type: SET_CURRENT_USER,
+        payload: {},
+      })
+    }, 1500);
+    toast.error("Account Deleted, Logging out ...", {autoClose: 1000})
+  }
+
   );
 };
 

@@ -12,7 +12,6 @@ import {
 
 //POST TASK
 export const addTask = (taskData) => (dispatch) => {
-  console.log(taskData);
 
   axios
     .post("/api/tasks/new", taskData)

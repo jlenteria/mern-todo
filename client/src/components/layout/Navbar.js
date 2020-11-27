@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { logoutUser, deleteAccount } from "../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import {Modal, Button} from 'react-bootstrap'
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
@@ -19,13 +20,22 @@ const Navbar = () => {
     dispatch(logoutUser());
   };
 
-  const AccountDelete = (e) => {
-    e.preventDefault();
-    if (window.confirm("Are you sure you want to delete your account?")) {
-      setShow(false);
-      dispatch(deleteAccount());
-    }
+  const AccountDelete = () => {
+    setShowConfirmation(true);
   };
+
+  const ConfirmClick = () => {
+    setShow(false);
+    setShowConfirmation(false);
+    dispatch(deleteAccount());
+
+  }
+
+  const backClick = () => {
+    setShow(false);
+    setShowConfirmation(false)
+
+  }
 
   const authLinks = (
     <div className="dashboard-nav">
@@ -57,6 +67,21 @@ const Navbar = () => {
           </div>
         ) : null}
       </div>
+      {showConfirmation ? (<Modal show={true} onHide={backClick} keyboard={false} animation={false}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmation</Modal.Title>
+              </Modal.Header>
+              
+              <Modal.Body className="text-center">
+                <h5 style={{width: '80%', margin: '0 auto'}}>Are you sure you want to delete your account ?</h5>
+              </Modal.Body>
+              <Modal.Footer>
+              <div className="d-flex float-center">
+                  <Button variant="secondary" type="button" onClick={backClick}>Cancel</Button>
+                  <Button variant="primary" type="button" className="ml-2" onClick={ConfirmClick}>Yes</Button>
+                </div>
+              </Modal.Footer>
+          </Modal>) : null}
     </div>
   );
   const guestLinks = (
@@ -85,6 +110,7 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
+      
     </div>
   );
   return (

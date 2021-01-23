@@ -38,7 +38,7 @@ const App = () => {
   return (
     <Router>
       <div className="App">
-        <ToastContainer/>
+        <ToastContainer />
         <Navbar />
         <Route exact path="/" component={Landing} />
 

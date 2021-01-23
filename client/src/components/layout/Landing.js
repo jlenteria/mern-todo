@@ -19,7 +19,7 @@ const Landing = (props) => {
             className="x-large"
             style={{ color: "#0D21A1", fontWeight: "bold" }}
           >
-            Todo App with Account
+            Bonfox Todo App
           </h1>
           <p
             style={{

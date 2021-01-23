@@ -43,70 +43,62 @@ const Login = (props) => {
     dispatch(loginUser(data));
   };
   return (
-    <div>
-      <section
-        className="container"
-        style={{
-          marginTop: "95px",
-          paddingBottom: "145px",
-        }}
-      >
-        <div className="row mx-auto login-container">
-          <div className="col-md-12 mx-auto log">
-            <h2 className="large text-primary text-center">
-              <i className="fa fa-user"></i> Sign In
-            </h2>
-            <hr />
-            {errors.notFound ? (
-              <div className="alert alert-danger">{errors.notFound}</div>
-            ) : null}
-            <form
-              className="form"
-              onSubmit={onSubmit}
-              style={{ marginTop: 10 }}
+    <section
+      className="container"
+      style={{
+        marginTop: "95px",
+      }}
+    >
+      <div className="row mx-auto login-container">
+        <div className="col-md-12 mx-auto log">
+          <h3 className="large text-light text-center">
+            <i className="fa fa-user"></i> Sign In
+          </h3>
+          <hr />
+          {errors.notFound ? (
+            <div className="alert alert-danger">{errors.notFound}</div>
+          ) : null}
+          <form className="form" onSubmit={onSubmit} style={{ marginTop: 10 }}>
+            <TextFieldGroup
+              autoComplete="on"
+              placeholder="Email Address"
+              name="email"
+              value={state.email}
+              onChange={onChange}
+              error={errors.loginEmail}
+            />
+            <TextFieldGroup
+              autoComplete="on"
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={state.password}
+              onChange={onChange}
+              error={errors.loginPassword}
+            />
+            {auth.isLoading ? (
+              <button type="button" className="btn btn-primary" disabled={true}>
+                <i className="fa fa-circle-o-notch fa-spin"> </i> {""}{" "}
+                Loading...
+              </button>
+            ) : (
+              <button type="submit" className="btn btn-success">
+                Login
+              </button>
+            )}
+          </form>
+          <p className="my-2 text-default" style={{ fontSize: 15 }}>
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              style={{ fontWeight: "bold", fontSize: 15, color: "black" }}
             >
-              <TextFieldGroup
-                autoComplete="on"
-                placeholder="Email Address"
-                name="email"
-                value={state.email}
-                onChange={onChange}
-                error={errors.loginEmail}
-              />
-              <TextFieldGroup
-                autoComplete="on"
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={state.password}
-                onChange={onChange}
-                error={errors.loginPassword}
-              />
-              {auth.isLoading ? (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  disabled={true}
-                >
-                  <i className="fa fa-circle-o-notch fa-spin"> </i> {""}{" "}
-                  Loading...
-                </button>
-              ) : (
-                <button type="submit" className="btn btn-primary">
-                  Login
-                </button>
-              )}
-            </form>
-            <p className="my-2">
-              Don't have an account?{" "}
-              <Link to="/register" style={{ fontWeight: "bold" }}>
-                Sign Up
-              </Link>
-            </p>
-          </div>
+              Sign Up
+            </Link>
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 export default Login;

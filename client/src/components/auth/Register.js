@@ -50,13 +50,10 @@ const Register = (props) => {
   };
   return (
     <div>
-      <section
-        className="container"
-        style={{ marginTop: "50px"}}
-      >
+      <section className="container" style={{ marginTop: "50px" }}>
         <div className="row mx-auto signup-container">
           <div className="col-md-12 mx-auto sign">
-            <h2 className="large text-primary text-center">
+            <h2 className="large text-light text-center">
               <i className="fa fa-user"></i>
               {""} Sign Up
             </h2>
@@ -110,13 +107,16 @@ const Register = (props) => {
                 onChange={onChange}
                 error={errors.password2}
               />
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-success">
                 Register
               </button>
             </form>
-            <p className="my-1">
-              Already have an account?{" "}
-              <Link to="/login" style={{ fontWeight: "bold" }}>
+            <p className="my-1 text-default" style={{ fontStyle: 15 }}>
+              Already have an account ?{" "}
+              <Link
+                to="/login"
+                style={{ fontWeight: "bold", fontSize: 15, color: "black" }}
+              >
                 Sign In
               </Link>
             </p>

@@ -26,7 +26,7 @@ body {
 .landing-inner {
   height: 100%;
   width: 80%;
-  margin: 250px auto auto auto;
+  margin: 210px auto auto auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,17 +34,16 @@ body {
   text-align: center;
 }
 .signup-container {
-  padding: 40px;
-  width: 50%;
-  background: rgba(239, 242, 241, 0.8);
-  border-radius: 30px;
-  margin-bottom: 100px;
+  padding: 10px;
+  width: 40%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 .login-container {
-  padding: 35px;
-  width: 50%;
-  background: rgba(239, 242, 241, 0.8);
-  border-radius: 30px;
+  padding: 10px;
+  width: 40%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 /* Forms */
@@ -96,7 +95,6 @@ button {
   margin-bottom: 150px;
 }
 
-
 .edit-task,
 .add-task,
 .confirmation {
@@ -124,41 +122,25 @@ button {
   text-align: center;
 }
 
-.dashboard-nav {
-  display: flex;
-  width: 90%;
-  margin: 0 auto;
-  justify-content: space-between;
-  height: 60px;
-}
-
-.dashboard-nav h3 {
-  margin-top: 10px;
-}
-
-.dashboard-nav h5 {
-  margin-top: 20px;
-  color: white;
-}
-
 .menu {
   display: block;
   position: absolute;
-  background: #6d98ba;
+  background: white;
   width: 160px;
-  color: white;
+  color: rgba(0, 0, 0, 0.6);
   text-align: center;
   border-radius: 7px;
   margin-top: -17px;
   margin-left: -26px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 footer {
-  background: #03012c;
-  color: rgba(255, 255, 255, 0.6);
-  position: fixed;
+  color: rgba(0, 0, 0, 0.6);
   left: 0;
   bottom: 0;
+  margin-top: 20px;
   width: 100%;
   height: 50px;
 }
@@ -201,12 +183,12 @@ footer {
 }
 
 @media only screen and (max-width: 600px) {
-  .landing-inner{
+  .landing-inner {
     height: 100%;
     width: 100%;
     margin: 100px auto auto auto;
   }
-  .landing-inner h1{
+  .landing-inner h1 {
     font-size: 30px;
   }
   .dashboard-sub {
@@ -235,17 +217,8 @@ footer {
   .signup-container {
     width: 95%;
   }
- .log, .sign{
+  .log,
+  .sign {
     padding: 0 !important;
-  }
-
-  footer {
-    background: #03012c;
-    color: rgba(255, 255, 255, 0.6);
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
   }
 }

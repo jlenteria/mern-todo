@@ -83,7 +83,7 @@ const Navbar = () => {
           </Modal.Body>
           <Modal.Footer>
             <div className="d-flex float-center">
-              <Button variant="secondary" type="button" onClick={backClick}>
+              <Button variant="danger" type="button" onClick={backClick}>
                 Cancel
               </Button>
               <Button

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Moment from "react-moment";
-import {Modal, Button} from 'react-bootstrap'
-import {
-  updateTask,
-  deleteTask,
-  getTasks,
-} from "../../actions/taskActions";
+import { Modal, Button } from "react-bootstrap";
+import { updateTask, deleteTask, getTasks } from "../../actions/taskActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../common/Spinner";
@@ -22,10 +18,9 @@ const Task = (props) => {
     oldCompleted: false,
     showEditForm: false,
     showDeleteConfirmation: false,
-    error: ""
+    error: "",
   });
 
-  
   const tasks = useSelector((state) => state.tasks);
 
   const dispatch = useDispatch();
@@ -61,7 +56,7 @@ const Task = (props) => {
       oldCompleted: com,
       completed: com,
       _id: id,
-      showEditForm: true
+      showEditForm: true,
     });
   };
 
@@ -69,33 +64,32 @@ const Task = (props) => {
     setState({
       showEditForm: false,
       showDeleteConfirmation: false,
-      error: ""
-    })
+      error: "",
+    });
   };
 
   const onSubmit = (id) => {
-
-      if (buttonDisabled) {
-        setState({...state,error: "Field is required"})
-      } else {
-        const newTask = {
-          description: state.description,
-          completed: state.completed,
-          date: new Date(),
-        };
-        setState({...state,error: "", showEditForm: false})
-        dispatch(updateTask(id, newTask));
-      }
+    if (buttonDisabled) {
+      setState({ ...state, error: "Field is required" });
+    } else {
+      const newTask = {
+        description: state.description,
+        completed: state.completed,
+        date: new Date(),
+      };
+      setState({ ...state, error: "", showEditForm: false });
+      dispatch(updateTask(id, newTask));
+    }
   };
 
   const onDelete = (id) => {
-    setState({...state,showDeleteConfirmation: true,_idDelete: id})
+    setState({ ...state, showDeleteConfirmation: true, _idDelete: id });
   };
 
   const confirmClick = () => {
-    setState({...state,showDeleteConfirmation: false})
+    setState({ ...state, showDeleteConfirmation: false });
     dispatch(deleteTask(state._idDelete));
-  }
+  };
 
   //for converting array
   let task = [];
@@ -175,7 +169,7 @@ const Task = (props) => {
                       >
                         <i
                           className="fa fa-trash fa-lg"
-                          style={{color: "#DE6C83" }}
+                          style={{ color: "#DE6C83" }}
                         ></i>
                       </button>
                     </div>
@@ -212,11 +206,16 @@ const Task = (props) => {
 
           {/* Edit div */}
           {state.showEditForm ? (
-            <Modal show={true} onHide={backClick} keyboard={false} animation={false}>
+            <Modal
+              show={true}
+              onHide={backClick}
+              keyboard={false}
+              animation={false}
+            >
               <Modal.Header closeButton>
                 <Modal.Title>Edit Task</Modal.Title>
               </Modal.Header>
-              
+
               <form
                 className="form"
                 onSubmit={(e) => {
@@ -224,58 +223,76 @@ const Task = (props) => {
                   onSubmit(state._id, tasks);
                 }}
               >
-              <Modal.Body>
-              <div className="form-group" style={{ textAlign: "left" }}>
-                  <TextFieldGroup
-                    placeholder={state.description}
-                    name="description"
-                    style={{ fontFamily: "monospace" }}
-                    value={state.description}
-                    onChange={onChangeField}
-                    autoComplete="off"
-                    error={state.error}
-                  />
-                  <div style={{ float: "left", marginTop: -10}}>
-                    <input
-                      defaultChecked={state.completed}
-                      type="checkbox"
-                      style={{ width: 15, height: 15 }}
-                      name="completed"
-                      value={state.completed}
-                      onChange={onChangeInput}
+                <Modal.Body>
+                  <div className="form-group" style={{ textAlign: "left" }}>
+                    <TextFieldGroup
+                      placeholder={state.description}
+                      name="description"
+                      style={{ fontFamily: "monospace" }}
+                      value={state.description}
+                      onChange={onChangeField}
+                      autoComplete="off"
+                      error={state.error}
                     />
-                    <span > Completed</span>
+                    <div style={{ float: "left", marginTop: -10 }}>
+                      <input
+                        defaultChecked={state.completed}
+                        type="checkbox"
+                        style={{ width: 15, height: 15 }}
+                        name="completed"
+                        value={state.completed}
+                        onChange={onChangeInput}
+                      />
+                      <span> Completed</span>
+                    </div>
                   </div>
-                </div>
-              </Modal.Body>
-                  <Modal.Footer style={{marginTop: 20}}>
+                </Modal.Body>
+                <Modal.Footer style={{ marginTop: 20 }}>
                   <div className="d-flex">
-                    <Button variant="secondary" onClick={backClick}>
-                    Cancel
-                  </Button>
+                    <Button variant="danger" onClick={backClick}>
+                      Cancel
+                    </Button>
                     <Button variant="primary" type="submit" className="ml-2">
                       Update
                     </Button>
                   </div>
-              </Modal.Footer>
+                </Modal.Footer>
               </form>
             </Modal>
           ) : null}
-          {state.showDeleteConfirmation ? (<Modal show={true} onHide={backClick} keyboard={false} animation={false}>
+          {state.showDeleteConfirmation ? (
+            <Modal
+              show={true}
+              onHide={backClick}
+              keyboard={false}
+              animation={false}
+            >
               <Modal.Header closeButton>
                 <Modal.Title>Confirmation</Modal.Title>
               </Modal.Header>
-              
+
               <Modal.Body className="text-center">
-                <h5 style={{width: '85%', margin: '0 auto'}}>Are you sure you want to delete this task ?</h5>
+                <h5 style={{ width: "85%", margin: "0 auto" }}>
+                  Are you sure you want to delete this task ?
+                </h5>
               </Modal.Body>
               <Modal.Footer>
-              <div className="d-flex float-center">
-                  <Button variant="secondary" type="button" onClick={backClick}>Cancel</Button>
-                  <Button variant="primary" type="button" className="ml-2" onClick={confirmClick}>Yes</Button>
+                <div className="d-flex float-center">
+                  <Button variant="danger" type="button" onClick={backClick}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="button"
+                    className="ml-2"
+                    onClick={confirmClick}
+                  >
+                    Yes
+                  </Button>
                 </div>
               </Modal.Footer>
-          </Modal>) : null}
+            </Modal>
+          ) : null}
         </div>
       )}
     </div>

@@ -77,7 +77,7 @@ const Login = (props) => {
               error={errors.loginPassword}
             />
             {auth.isLoading ? (
-              <button type="button" className="btn btn-primary" disabled={true}>
+              <button type="button" className="btn btn-success" disabled={true}>
                 <i className="fa fa-circle-o-notch fa-spin"> </i> {""}{" "}
                 Loading...
               </button>

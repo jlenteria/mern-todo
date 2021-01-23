@@ -60,7 +60,7 @@ const Login = (props) => {
           ) : null}
           <form className="form" onSubmit={onSubmit} style={{ marginTop: 10 }}>
             <TextFieldGroup
-              autoComplete="on"
+              autoComplete="off"
               placeholder="Email Address"
               name="email"
               value={state.email}
@@ -68,7 +68,7 @@ const Login = (props) => {
               error={errors.loginEmail}
             />
             <TextFieldGroup
-              autoComplete="on"
+              autoComplete="off"
               type="password"
               placeholder="Password"
               name="password"
